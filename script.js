@@ -1,5 +1,5 @@
 window.addEventListener('DOMContentLoaded', () => {
-	new ImagePlayer(document.querySelectorAll('[data-imageplayer]'), { roop: true, count: true, wait: 100 });
+	new ImagePlayer(document.querySelectorAll('[data-imageplayer]'), { roop: true, count: true, wait: 200 });
 });
 
 class ImagePlayer {

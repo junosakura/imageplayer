@@ -25,6 +25,7 @@
 
 .imageplayer-dialog {
 	container-type: inline-size;
+	display: block;
 	position: fixed;
 	top: 0;
 	left: 0;
