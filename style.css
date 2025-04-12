@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 [data-imageplayer] {
-    display: inline-block;
+	display: inline-block;
 	position: relative;
 	overflow: hidden;
 	border-radius: .5rem;
@@ -9,7 +9,7 @@
 }
 
 [data-imageplayer] img {
-    vertical-align: middle;
+	vertical-align: middle;
 }
 
 [data-imageplayer][data-blur="true"]::after {
@@ -81,8 +81,8 @@
 	display: grid;
 	grid: auto / repeat(3, 1fr);
 	place-items: center;
-    position: relative;
-    right: 100cqw;
+	position: relative;
+	right: 100cqw;
 	width: 300cqw;
 	height: calc(100cqh - 10rem);
 }
