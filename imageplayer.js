@@ -84,7 +84,7 @@ class ImagePlayer {
 			this.stop(event);
 			this._currentAnchor = event.target;
 		}
-		if (event.target.parentElement.dataset.imageplayer) {
+		else if (event.target.parentElement.dataset.imageplayer) {
 			this.stop(event);
 			this._currentAnchor = event.target.closest('[data-imageplayer]');
 		}
