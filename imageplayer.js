@@ -2,7 +2,6 @@ class ImagePlayer {
 
 	constructor() {
 		// init
-		this._anchors = document.querySelectorAll('[data-imageplayer]');
 		this._options = [];
 		this._currentIndex = null;
 		this._currentGroup = null;
@@ -46,7 +45,8 @@ class ImagePlayer {
 		this._nextButton.classList.add('imageplayer-nextbutton');
 		this._prevButton.classList.add('imageplayer-prevbutton');
 		// addEventListener
-		this._anchors.forEach((e, i) => e.addEventListener('click', this.open.bind(this, i)));
+		document.addEventListener('click', this.open.bind(this));
+		document.addEventListener('keydown', this.keydown.bind(this));
 		this._dialog.addEventListener('mousewheel', this.mousewheel.bind(this));
 		this._centerBlock.addEventListener('mousedown', this.mousedown.bind(this), {capture:true});
 		this._centerBlock.addEventListener('mouseup', this.mouseup.bind(this), {capture:true});
@@ -55,7 +55,6 @@ class ImagePlayer {
 		this._closeButton.addEventListener('click', this.close.bind(this));
 		this._nextButton.addEventListener('click', this.next.bind(this));
 		this._prevButton.addEventListener('click', this.prev.bind(this));
-		document.addEventListener('keydown', this.keydown.bind(this));
 		// append
 		this._dialog.append(this._headerBlock, this._centerBlock, this._footerBlock);
 		this._centerBlock.append(this._prevBlock, this._currentBlock, this._nextBlock);
@@ -80,15 +79,24 @@ class ImagePlayer {
 		event.stopPropagation();
 	}
 
-	async open(index, event) {
-		this.stop(event);
-		this._currentAnchor = this._anchors[index];
-		this._currentGroup = this._anchors[index].dataset.imageplayer;
-		this._currentAnchors = Array.from(this._anchors).filter(e => e.dataset.imageplayer === this._currentGroup);
+	async open(event) {
+		if (event.target.dataset.imageplayer) {
+			this.stop(event);
+			this._currentAnchor = event.target;
+		}
+		if (event.target.parentElement.dataset.imageplayer) {
+			this.stop(event);
+			this._currentAnchor = event.target.closest('[data-imageplayer]');
+		}
+		else {
+			return false;
+		}
+		this._currentGroup = this._currentAnchor.dataset.imageplayer;
+		this._currentAnchors = document.querySelectorAll('[data-imageplayer="' + this._currentGroup + '"]');
 		this._currentIndex = Array.from(this._currentAnchors).indexOf(this._currentAnchor);
 		this._currentOptions = this._options.filter(e => e.name === this._currentGroup)[0] || {};
 		this._currentOptions.counter = this._currentOptions.counter || false;
-		this._currentOptions.roop = this._currentOptions.roop || false;
+		this._currentOptions.loop = this._currentOptions.loop || false;
 		this._currentOptions.scroll = this._currentOptions.scroll || false;
 		this._currentOptions.wait = this._currentOptions.wait || 200;
 		this.update(this._currentIndex);
@@ -139,9 +147,9 @@ class ImagePlayer {
 		this._counterText.insertAdjacentHTML('beforeend', counter);
 		this._headerText.insertAdjacentHTML('beforeend', header.replaceAll('\\n', '<br>'));
 		this._footerText.insertAdjacentHTML('beforeend', footer.replaceAll('\\n', '<br>'));
-		this._prevButton.disabled = !this._currentOptions.roop && this._currentIndex === 0;
-		this._nextButton.disabled = !this._currentOptions.roop && this._currentIndex === this._currentAnchors.length - 1;
-		if (this._currentOptions.scroll) this._currentAnchor.scrollIntoView({block:'center'});
+		this._prevButton.disabled = !this._currentOptions.loop && this._currentIndex === 0;
+		this._nextButton.disabled = !this._currentOptions.loop && this._currentIndex === this._currentAnchors.length - 1;
+		if (this._currentOptions.scroll) this._currentAnchor.scrollIntoView({block:'center', behavior:'smooth'});
 	}
 
 	async updateImage(index, image, block) {
@@ -181,8 +189,8 @@ class ImagePlayer {
 	}
 
 	mousewheel(event) {
-		if (this._isSliding) return false;
 		this.stop(event);
+		if (this._isSliding) return false;
 		if (event.deltaY < 0) return this.prev(event);
 		if (event.deltaY > 0) return this.next(event);
 	}

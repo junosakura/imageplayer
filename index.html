@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1">
@@ -9,10 +9,8 @@
 		<script>
 			window.addEventListener('DOMContentLoaded', () => {
 				const imageplayer = new ImagePlayer();
-				imageplayer.add({name: 'counter', counter: true});
-				imageplayer.add({name: 'roop', roop: true});
-				imageplayer.add({name: 'scroll', scroll: true});
-				imageplayer.add({name: 'wait', wait: 500});
+				imageplayer.add({name:'Group3', counter:true, loop: true, scroll: true, wait:200});
+				imageplayer.add({name:'Group4', counter:true, loop: true, scroll: true, wait:400});
 			});
 		</script>
 		<style>
@@ -30,8 +28,11 @@
 				border-radius: 0 .5rem .5rem .5rem;
 				background-color: hsl(210 50 90);
 			}
+			.codeblock code {
+				white-space: pre-wrap;
+			}
 			footer {
-				margin: 1rem 0;
+				margin: 10rem 0 1rem;
 				border-top: 1px solid gainsboro;
 				text-align: center;
 			}
@@ -40,8 +41,7 @@
 	<body>
 		<header>
 			<h1>ImagePlayer</h1>
-			<p>The image preview library.</p>
-			<p>This can be controlled with mouse (click, drag, scroll), touch (tap, swipe), and keyboard (tab and enter, arrows and escape).</p>
+			<p>The image preview library. This can be controlled with mouse (click, drag, scroll), touch (tap, swipe), and keyboard (tab and enter, arrows and escape).</p>
 			<p>Download: <a href="https://github.com/junosakura/imageplayer">GitHub</a></p>
 		</header>
 		<section>
@@ -72,54 +72,58 @@
 			</div>
 		</section>
 		<section>
-			<h2>Group Option</h2>
-			<p>You can group by the value of data-imageplayer attribute.</p>
+			<h2>Attributes</h2>
+			<p>1. You can group by the value of data-imageplayer attribute.</p>
+			<p>2. You can add comments with the data-header and data-footer attributes. Comments can use \n to break lines.</p>
+			<p>3. You can add a blur with the data-blur attribute. Blur can toggled by pressing the preview image.</p>
 			<dl class="codeblock">
 				<dt>HTML</dt>
-				<dd><code>&lt;a href="image.jpg" data-imageplayer="<b>Group Name</b>"&gt;Image&lt;/a&gt;</code></dd>
+				<dd><code>&lt;a href="image.jpg" data-imageplayer="<b>Group Name</b>" data-header="<b>Header Comment</b>" data-footer="<b>Footer Comment</b>" data-blur="<b>true</b>"&gt;Image&lt;/a&gt;</code></dd>
 			</dl>
 			<p>Example:</p>
 			<div>
 				<div>Group1</div>
-				<a href="image1.jpg" data-imageplayer="group1"><img src="image1.jpg" width="80" height="80" alt="Image1"></a>
-				<a href="image2.jpg" data-imageplayer="group1"><img src="image2.jpg" width="80" height="80" alt="Image2"></a>
-				<a href="image3.jpg" data-imageplayer="group1"><img src="image3.jpg" width="80" height="80" alt="Image3"></a>
+				<a href="image1.jpg" data-imageplayer="Group1" data-header="Group1" data-footer="Image1"><img src="image1.jpg" width="80" height="80" alt="Image1"></a>
+				<a href="image2.jpg" data-imageplayer="Group1" data-header="Group1" data-footer="Image2"><img src="image2.jpg" width="80" height="80" alt="Image2"></a>
+				<a href="image3.jpg" data-imageplayer="Group1" data-header="Group1" data-footer="Image3"><img src="image3.jpg" width="80" height="80" alt="Image3"></a>
 			</div>
 			<div>
 				<div>Group2</div>
-				<a href="image1.jpg" data-imageplayer="group2"><img src="image1.jpg" width="80" height="80" alt="Image1"></a>
-				<a href="image2.jpg" data-imageplayer="group2"><img src="image2.jpg" width="80" height="80" alt="Image2"></a>
-				<a href="image3.jpg" data-imageplayer="group2"><img src="image3.jpg" width="80" height="80" alt="Image3"></a>
+				<a href="image1.jpg" data-imageplayer="Grpup2" data-header="Group2" data-footer="Image1" data-blur="true"><img src="image1.jpg" width="80" height="80" alt=""></a>
+				<a href="image2.jpg" data-imageplayer="Grpup2" data-header="Group2" data-footer="Image2" data-blur="true"><img src="image2.jpg" width="80" height="80" alt=""></a>
+				<a href="image3.jpg" data-imageplayer="Grpup2" data-header="Group2" data-footer="Image3" data-blur="true"><img src="image3.jpg" width="80" height="80" alt=""></a>
 			</div>
 		</section>
 		<section>
-			<h2>Comment Option</h2>
-			<p>You can add comments with the data-header and data-footer attributes.</p>
-			<p>Comments can use \n to break lines.</p>
+			<h2>Options</h2>
+			<p>The following options can be added for each group:</p>
+			<p>1. Enable counter.</p>
+			<p>2. Enable loop.</p>
+			<p>3. Enable scrolling. If scrolling enabled, the target a element will scroll closer to the center of the screen.</small></p>
+			<p>4. Specify wait (animation speed). The default is 200.</p>
 			<dl class="codeblock">
-				<dt>HTML</dt>
-				<dd><code>&lt;a href="image.jpg" data-imageplayer="<b>Group Name</b>" data-header="<b>Header Comment</b>" data-footer="<b>Footer Comment</b>"&gt;Image&lt;/a&gt;</code></dd>
+				<dt>JavaScript</dt>
+				<dd>
+					<div><code>window.addEventListener('DOMContentLoaded', () => {</code></div>
+					<div><code>  const imageplayer = new ImagePlayer();</code></div>
+					<div><code>  imageplayer.add({name:'Group Name A', counter:true, loop:true, scroll:true, wait:200});</code></div>
+					<div><code>  imageplayer.add({name:'Group Name B', counter:true, loop:true, scroll:true, wait:400});</code></div>
+					<div><code>    :</code></div>
+					<div><code>});</code></div>
+				</dd>
 			</dl>
 			<p>Example:</p>
 			<div>
-				<a href="image1.jpg" data-imageplayer="comment" data-header="Header Comment 1" data-footer="Footer Comment 1"><img src="image1.jpg" width="80" height="80" alt="Image1"></a>
-				<a href="image2.jpg" data-imageplayer="comment" data-header="Header Comment 2" data-footer="Footer Comment 2"><img src="image2.jpg" width="80" height="80" alt="Image2"></a>
-				<a href="image3.jpg" data-imageplayer="comment" data-header="Header Comment 3" data-footer="Footer Comment 3"><img src="image3.jpg" width="80" height="80" alt="Image3"></a>
+				<div>Group3</div>
+				<a href="image1.jpg" data-imageplayer="Group3" data-header="Group4" data-footer="Image1"><img src="image1.jpg" width="80" height="80" alt="Image1"></a>
+				<a href="image2.jpg" data-imageplayer="Group3" data-header="Group4" data-footer="Image2"><img src="image2.jpg" width="80" height="80" alt="Image2"></a>
+				<a href="image3.jpg" data-imageplayer="Group3" data-header="Group4" data-footer="Image3"><img src="image3.jpg" width="80" height="80" alt="Image3"></a>
 			</div>
-		</section>
-		<section>
-			<h2>Blur Option</h2>
-			<p>You can add a blur with the data-blur attribute.</p>
-			<p>Blur can toggled by clicking on the preview image.</p>
-			<dl class="codeblock">
-				<dt>HTML</dt>
-				<dd><code>&lt;a href="image.jpg" data-imageplayer="<b>Group Name</b>" data-blur="<b>true</b>"&gt;Image&lt;/a&gt;</code></dd>
-			</dl>
-			<p>Example:</p>
 			<div>
-				<a href="image1.jpg" data-imageplayer="blur" data-blur="true"><img src="image1.jpg" width="80" height="80" alt=""></a>
-				<a href="image2.jpg" data-imageplayer="blur" data-blur="true"><img src="image2.jpg" width="80" height="80" alt=""></a>
-				<a href="image3.jpg" data-imageplayer="blur" data-blur="true"><img src="image3.jpg" width="80" height="80" alt=""></a>
+				<div>Group4</div>
+				<a href="image1.jpg" data-imageplayer="Group4" data-header="Group5" data-footer="Image1"><img src="image1.jpg" width="80" height="80" alt="Image1"></a>
+				<a href="image2.jpg" data-imageplayer="Group4" data-header="Group5" data-footer="Image2"><img src="image2.jpg" width="80" height="80" alt="Image2"></a>
+				<a href="image3.jpg" data-imageplayer="Group4" data-header="Group5" data-footer="Image3"><img src="image3.jpg" width="80" height="80" alt="Image3"></a>
 			</div>
 		</section>
 		<footer>
