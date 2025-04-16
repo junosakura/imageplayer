@@ -4,22 +4,126 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1">
 		<title>ImagePlayer</title>
-		<link rel="stylesheet" href="style.css">
-		<script src="script.js"></script>
+		<link rel="stylesheet" href="imageplayer.css">
+		<script src="imageplayer.js"></script>
+		<script>
+			window.addEventListener('DOMContentLoaded', () => {
+				const imageplayer = new ImagePlayer();
+				imageplayer.add({name: 'counter', counter: true});
+				imageplayer.add({name: 'roop', roop: true});
+				imageplayer.add({name: 'scroll', scroll: true});
+				imageplayer.add({name: 'wait', wait: 500});
+			});
+		</script>
+		<style>
+			.codeblock dt {
+				display: inline-block;
+				padding: .5rem 1rem 0;
+				border-radius: .5rem .5rem 0 0;
+				background-color: hsl(210 50 90);
+				font-size: smaller;
+				vertical-align: middle;
+			}
+			.codeblock dd {
+				margin: 0;
+				padding: 1rem;
+				border-radius: 0 .5rem .5rem .5rem;
+				background-color: hsl(210 50 90);
+			}
+			footer {
+				margin: 1rem 0;
+				border-top: 1px solid gainsboro;
+				text-align: center;
+			}
+		</style>
 	</head>
 	<body>
-		<h1>ImagePlayer</h1>
-		<h2>Group1</h2>
-		<div>
-			<a href="image1.jpg" data-imageplayer="group1" data-header="Group1" data-footer="Author: Alejandro Escamilla\nhttps://unsplash.com/photos/yC-Yzbqy7PY"><img src="image1.jpg" width="100" height="100" alt=""></a>
-			<a href="image2.jpg" data-imageplayer="group1" data-header="Group1" data-footer="Author: Alejandro Escamilla\nhttps://unsplash.com/photos/LNRyGwIJr5c"><img src="image2.jpg" width="100" height="100" alt=""></a>
-			<a href="image3.jpg" data-imageplayer="group1" data-header="Group1" data-footer="Author: Alejandro Escamilla\nhttps://unsplash.com/photos/N7XodRrbzS0"><img src="image3.jpg" width="100" height="100" alt=""></a>
-		</div>
-		<h2>Group2 (blur)</h2>
-		<div>
-			<a href="image1.jpg" data-imageplayer="group2" data-header="Group2" data-footer="Author: Alejandro Escamilla\nhttps://unsplash.com/photos/yC-Yzbqy7PY" data-blur="true"><img src="image1.jpg" width="100" height="100" alt=""></a>
-			<a href="image2.jpg" data-imageplayer="group2" data-header="Group2" data-footer="Author: Alejandro Escamilla\nhttps://unsplash.com/photos/LNRyGwIJr5c" data-blur="true"><img src="image2.jpg" width="100" height="100" alt=""></a>
-			<a href="image3.jpg" data-imageplayer="group2" data-header="Group2" data-footer="Author: Alejandro Escamilla\nhttps://unsplash.com/photos/N7XodRrbzS0" data-blur="true"><img src="image3.jpg" width="100" height="100" alt=""></a>
-		</div>
+		<header>
+			<h1>ImagePlayer</h1>
+			<p>The image preview library.</p>
+			<p>This can be controlled with mouse (click, drag, scroll), touch (tap, swipe), and keyboard (tab and enter, arrows and escape).</p>
+			<p>Download: <a href="https://github.com/junosakura/imageplayer">GitHub</a></p>
+		</header>
+		<section>
+			<h2>Usage</h2>
+			<p>1. Load the stylesheet and javascript.</p>
+			<dl class="codeblock">
+				<dt>HTML</dt>
+				<dd>
+					<div><code>&lt;link rel="stylesheet" href="imageplayer.css"&gt;</code></div>
+					<div><code>&lt;script src="imageplayer.js"&gt;&lt;/script&gt;</code></div>
+				</dd>
+			</dl>
+			<p>2. Add the data-imageplayer attribute to the target a element.</p>
+			<dl class="codeblock">
+				<dt>HTML</dt>
+				<dd><code>&lt;a href="image.jpg" data-imageplayer="default"&gt;Image&lt;/a&gt;</code></dd>
+			</dl>
+			<p>3. Create an object of ImagePlayer class after loading the DOM.</p>
+			<dl class="codeblock">
+				<dt>JavaScript</dt>
+				<dd><code>window.addEventListener('DOMContentLoaded', () => new ImagePlayer());</code></dd>
+			</dl>
+			<p>Example:</p>
+			<div>
+				<a href="image1.jpg" data-imageplayer="default"><img src="image1.jpg" width="80" height="80" alt="Image1"></a>
+				<a href="image2.jpg" data-imageplayer="default"><img src="image2.jpg" width="80" height="80" alt="Image2"></a>
+				<a href="image3.jpg" data-imageplayer="default"><img src="image3.jpg" width="80" height="80" alt="Image3"></a>
+			</div>
+		</section>
+		<section>
+			<h2>Group Option</h2>
+			<p>You can group by the value of data-imageplayer attribute.</p>
+			<dl class="codeblock">
+				<dt>HTML</dt>
+				<dd><code>&lt;a href="image.jpg" data-imageplayer="<b>Group Name</b>"&gt;Image&lt;/a&gt;</code></dd>
+			</dl>
+			<p>Example:</p>
+			<div>
+				<div>Group1</div>
+				<a href="image1.jpg" data-imageplayer="group1"><img src="image1.jpg" width="80" height="80" alt="Image1"></a>
+				<a href="image2.jpg" data-imageplayer="group1"><img src="image2.jpg" width="80" height="80" alt="Image2"></a>
+				<a href="image3.jpg" data-imageplayer="group1"><img src="image3.jpg" width="80" height="80" alt="Image3"></a>
+			</div>
+			<div>
+				<div>Group2</div>
+				<a href="image1.jpg" data-imageplayer="group2"><img src="image1.jpg" width="80" height="80" alt="Image1"></a>
+				<a href="image2.jpg" data-imageplayer="group2"><img src="image2.jpg" width="80" height="80" alt="Image2"></a>
+				<a href="image3.jpg" data-imageplayer="group2"><img src="image3.jpg" width="80" height="80" alt="Image3"></a>
+			</div>
+		</section>
+		<section>
+			<h2>Comment Option</h2>
+			<p>You can add comments with the data-header and data-footer attributes.</p>
+			<p>Comments can use \n to break lines.</p>
+			<dl class="codeblock">
+				<dt>HTML</dt>
+				<dd><code>&lt;a href="image.jpg" data-imageplayer="<b>Group Name</b>" data-header="<b>Header Comment</b>" data-footer="<b>Footer Comment</b>"&gt;Image&lt;/a&gt;</code></dd>
+			</dl>
+			<p>Example:</p>
+			<div>
+				<a href="image1.jpg" data-imageplayer="comment" data-header="Header Comment 1" data-footer="Footer Comment 1"><img src="image1.jpg" width="80" height="80" alt="Image1"></a>
+				<a href="image2.jpg" data-imageplayer="comment" data-header="Header Comment 2" data-footer="Footer Comment 2"><img src="image2.jpg" width="80" height="80" alt="Image2"></a>
+				<a href="image3.jpg" data-imageplayer="comment" data-header="Header Comment 3" data-footer="Footer Comment 3"><img src="image3.jpg" width="80" height="80" alt="Image3"></a>
+			</div>
+		</section>
+		<section>
+			<h2>Blur Option</h2>
+			<p>You can add a blur with the data-blur attribute.</p>
+			<p>Blur can toggled by clicking on the preview image.</p>
+			<dl class="codeblock">
+				<dt>HTML</dt>
+				<dd><code>&lt;a href="image.jpg" data-imageplayer="<b>Group Name</b>" data-blur="<b>true</b>"&gt;Image&lt;/a&gt;</code></dd>
+			</dl>
+			<p>Example:</p>
+			<div>
+				<a href="image1.jpg" data-imageplayer="blur" data-blur="true"><img src="image1.jpg" width="80" height="80" alt=""></a>
+				<a href="image2.jpg" data-imageplayer="blur" data-blur="true"><img src="image2.jpg" width="80" height="80" alt=""></a>
+				<a href="image3.jpg" data-imageplayer="blur" data-blur="true"><img src="image3.jpg" width="80" height="80" alt=""></a>
+			</div>
+		</section>
+		<footer>
+			<p>&copy; 2025 JunoSakura</p>
+		</footer>
 	</body>
 </html>
