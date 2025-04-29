@@ -157,11 +157,12 @@ class ImagePlayer {
 		if (index > this._currentAnchors.length - 1) index = 0;
 		const anchor = this._currentAnchors[index];
 		const blur = anchor.dataset.blur === 'true';
+		const current = index === this._currentIndex;
 		image.src = '';
 		image.src = anchor;
 		image.dataset.blur = blur;
 		block.dataset.blur = blur;
-		block.tabIndex = blur ? 0 : -1;
+		block.tabIndex = current && blur ? 0 : -1;
 		while(image.complete) await this.wait(1);
 	}
 
